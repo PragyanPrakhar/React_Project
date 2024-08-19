@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import Cards,{withRatedLabel} from "./Cards";
+import Cards, { withRatedLabel } from "./Cards";
 import { Link } from "react-router-dom";
 import Shimmer from "./Shimmer";
+import DropDown from "./DropDown";
 
 const Body = () => {
     const [products, setProducts] = useState(null);
@@ -10,10 +11,22 @@ const Body = () => {
         []
     );
     const [searchText, setSearchText] = useState("");
-    const HighlyRatedCard=withRatedLabel(Cards);
+    const HighlyRatedCard = withRatedLabel(Cards);
+    const [selectedOption, setSelectedOption] = useState("Categories");
     useEffect(() => {
         fetchData();
     }, []);
+
+    const filterCategories = (category) => {
+        setSelectedOption(category);
+        const filteredProducts = originalFilteredProducts.filter(
+            (product) => {
+                return product.category.toLowerCase().includes(category.toLowerCase());
+            }
+        );
+        setFilteredProducts(filteredProducts);
+    };
+
     // console.log(filteredProducts);
     const fetchData = async () => {
         const response = await fetch("https://dummyjson.com/products");
@@ -23,9 +36,40 @@ const Body = () => {
         setOriginalFilteredProducts(data.products);
     };
     const [value, setValue] = useState(null);
-    if(products===null) return <Shimmer/>
+    if (products === null) return <Shimmer />;
     return (
         <div className="body">
+            <div className="dropdown-container">
+                <h3>Selected option :{selectedOption}</h3>
+                <select value={selectedOption}
+                onChange={(e) => filterCategories(e.target.value)}>
+                    <option
+                        value="Beauty"
+                        // onChange={() => filterCategories("Beauty")}
+                    >
+                        BEAUTY
+                    </option>
+                    <option
+                        value="Fragrances"
+                        // onChange={() => filterCategories("FRAGRANCES")}
+                    >
+                        FRAGRANCES
+                    </option>
+                    <option
+                        value="Furniture"
+                        // onChange={() => filterCategories("FURNITURE")}
+                    >
+                        FURNITURE
+                    </option>
+                    <option
+                        value="Groceries"
+                        // onChange={() => filterCategories("GROCERIES")}
+                    >
+                        GROCERIES
+                    </option>
+                </select>
+            </div>
+
             <div className="range-filter">
                 <input
                     type="range"
@@ -50,7 +94,6 @@ const Body = () => {
             </div>
             <div className="search-button">
                 <button
-                    // type="submit"
                     className="search-btn border-2"
                     onClick={() => {
                         const filteredProducts =
@@ -83,11 +126,14 @@ const Body = () => {
             <div className="flex gap-5 flex-wrap justify-center ">
                 {filteredProducts?.map((item) => (
                     <Link to={`/product/${item.id}`} key={item.id}>
-                        {/** if the rating of the product is more than 4.5 then add a highly rated label to it.*/
-                            item.rating > 4.5 ? <HighlyRatedCard data={item}/> : <Cards data={item} />
-
+                        {
+                            /** if the rating of the product is more than 4.5 then add a highly rated label to it.*/
+                            item.rating > 4.5 ? (
+                                <HighlyRatedCard data={item} />
+                            ) : (
+                                <Cards data={item} />
+                            )
                         }
-                        
                     </Link>
                 ))}
             </div>
