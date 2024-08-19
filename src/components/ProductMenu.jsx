@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Reviews from "./Reviews";
 import ReviewAccordian from "./ReviewAccordian";
+import ClipLoader from "react-spinners/ClipLoader";
 const ProductMenu = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
@@ -16,6 +17,20 @@ const ProductMenu = () => {
         setProduct(data);
         console.log(data);
     };
+    // if (product === null) return <ClipLoader />;
+    if (product === null) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <ClipLoader
+                    color={"#4A90E2"}
+                    loading={true}
+                    size={150}
+                    css={{ border: "2px solid #4A90E2", borderRadius: "50%" }}
+                />
+            </div>
+        );
+    }
+    
     return (
         <section className="text-gray-600 body-font overflow-hidden">
             <div className="container px-5  mx-auto">
