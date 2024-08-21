@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../utils/cartSlice";
-import { increaseQuantity, decreaseQuantity } from "../utils/cartSlice";
+import { increaseQuantity, decreaseQuantity,removeItem } from "../utils/cartSlice";
 import EmptyCart from "./EmptyCart";
 // import { useDispatch } from "react-redux";
 
@@ -34,10 +34,13 @@ const CartPage = ({ items }) => {
                                             <h3 className="text-lg font-semibold">
                                                 {item.title}
                                             </h3>
-                                            <div className="flex justify-between  items-center">
+                                            <div className="flex  items-center">
                                                 {/* <h2 className="text-md pt-2">
                                                     Quantity : {item.quantity}
                                                 </h2> */}
+
+                                                {/* here starts the div of plus and minus */}
+                                                
                                                 <div className="flex gap-3 p-2">
                                                     {/* <h1>{item.id}</h1> */}
                                                     <span
@@ -70,6 +73,9 @@ const CartPage = ({ items }) => {
                                                         ➖
                                                     </span>
                                                 </div>
+                                                <span className="flex pl-16 cursor-pointer" onClick={()=>
+                                                    dispatch(removeItem({id : item?.id}))
+                                                }>❌</span>
                                             </div>
                                         </div>
                                         <span className="text-gray-500">
