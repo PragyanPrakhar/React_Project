@@ -20,28 +20,6 @@ const Cards = ({ data }) => {
     );
 };
 
-{
-    /* <div className="max-w-xs rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800">
-            <img
-                src={data.images[0]}
-                alt=""
-                className="object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500"
-            />
-            <div className="flex flex-col justify-between p-6 space-y-8">
-                <div className="space-y-2 flex flex-col justify-between">
-                    <h2 className="text-2xl font-semibold tracking-wide">
-                        {data.title}
-                    </h2>
-                    <h2 className="text-2xl font-semibold tracking-wide">
-                        {data.category}
-                    </h2>
-                    <h2 className="text-xl font-semibold tracking-wide">
-                        {data.price}
-                    </h2>
-                </div>
-            </div>
-        </div> */
-}
 //Higher Order Components:-
 //input-> Card
 // Output ->promotedCard

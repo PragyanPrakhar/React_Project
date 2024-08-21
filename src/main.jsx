@@ -9,6 +9,8 @@ import About from './components/About.jsx';
 import Cart from './components/Cart.jsx';
 import App from './App.jsx'
 import './index.css'
+import { Provider } from 'react-redux';
+import appStore from './utils/appStore.js';
 export const appRouter = createBrowserRouter([
   {
       path: "/",
@@ -40,6 +42,8 @@ export const appRouter = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Provider store={appStore}>
     <RouterProvider router={appRouter}/>
+    </Provider>
   </StrictMode>,
 )

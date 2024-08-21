@@ -62,7 +62,7 @@ const Header = () => {
                         </a>
                     </li>
                     <li className="flex items-center px-4  cursor-pointer -mb-1  dark:border-">
-                        <Link to="/cart">Cart-({cartItems.length})</Link>
+                        <Link to="/cart">Cart-({cartItems?.length})</Link>
                     </li>
                 </ul>
                 <button className="flex justify-end p-4 md:hidden">

@@ -5,12 +5,12 @@ import ReviewAccordian from "./ReviewAccordian";
 import ClipLoader from "react-spinners/ClipLoader";
 import { addItem } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 const ProductMenu = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [show, setShow] = useState(null);
     const dispatch = useDispatch();
-
     useEffect(() => {
         fetchProct();
     }, []);
@@ -20,7 +20,6 @@ const ProductMenu = () => {
         setProduct(data);
         console.log(data);
     };
-    // if (product === null) return <ClipLoader />;
     if (product === null) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -34,7 +33,7 @@ const ProductMenu = () => {
         );
     }
     const handleAddItem = (item) => {
-        //Dispatch an action
+        toast.success("item added to cart");
         dispatch(addItem(item));
     };
     return (
@@ -164,9 +163,7 @@ const ProductMenu = () => {
                                 </span>
                                 <button
                                     className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-                                    onClick={() =>
-                                        handleAddItem(product)
-                                    }
+                                    onClick={() => handleAddItem(product)}
                                 >
                                     Add to Cart
                                 </button>
@@ -201,7 +198,6 @@ const ProductMenu = () => {
                         ))}
                     </div>
                 </div>
-                {/* <ReviewAccordian  data={product?.reviews}/> */}
             </section>
         </>
     );

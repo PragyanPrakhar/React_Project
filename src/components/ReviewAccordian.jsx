@@ -22,8 +22,6 @@ const ReviewAccordian = ({ data, show, setShow }) => {
                     </div>
                 )}
             </div>
-            {/**Accordian Body */}
-            {/* <h1>Hello</h1> */}
         </div>
     );
 };
