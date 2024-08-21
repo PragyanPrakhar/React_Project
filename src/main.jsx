@@ -6,6 +6,7 @@ import ProductMenu from './components/ProductMenu.jsx';
 import Body from './components/Body.jsx';
 import Preview from './components/Preview.jsx';
 import About from './components/About.jsx';
+import Cart from './components/Cart.jsx';
 import App from './App.jsx'
 import './index.css'
 export const appRouter = createBrowserRouter([
@@ -28,6 +29,10 @@ export const appRouter = createBrowserRouter([
           {
             path:"/product/:id",
             element:<ProductMenu/>
+          },
+          {
+            path:"/cart",
+            element:<Cart/>
           }
       ],
   },
