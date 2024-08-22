@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Reviews from "./Reviews";
 import ReviewAccordian from "./ReviewAccordian";
 import ClipLoader from "react-spinners/ClipLoader";
-import { addItem } from "../utils/cartSlice";
+import { addItem,addItemInWishlist } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 const ProductMenu = () => {
@@ -36,6 +36,12 @@ const ProductMenu = () => {
         toast.success("item added to cart");
         dispatch(addItem(item));
     };
+    
+    const handleAddItemInWishList=(item)=>{
+        toast.success("item added to wishlist");
+        dispatch(addItemInWishlist(item));
+
+    }
     return (
         <>
             <section className="text-gray-600 body-font overflow-hidden">
@@ -167,7 +173,9 @@ const ProductMenu = () => {
                                 >
                                     Add to Cart
                                 </button>
-                                <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 hover:bg-pink-200">
+                                <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 hover:bg-pink-200"
+                                    onClick={()=>handleAddItemInWishList(product)}
+                                    >
                                     <svg
                                         fill="currentColor"
                                         stroke-linecap="round"

@@ -7,6 +7,8 @@ import Body from './components/Body.jsx';
 import Preview from './components/Preview.jsx';
 import About from './components/About.jsx';
 import Cart from './components/Cart.jsx';
+import WishList from './components/WishList.jsx';
+
 import App from './App.jsx'
 import './index.css'
 import { Provider } from 'react-redux';
@@ -35,6 +37,10 @@ export const appRouter = createBrowserRouter([
           {
             path:"/cart",
             element:<Cart/>
+          },
+          {
+            path:"wishlist",
+            element:<WishList/>
           }
       ],
   },

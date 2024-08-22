@@ -1,9 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import UseOnlineStatus from "../utils/UseOnlineStatus";
 import { useSelector } from "react-redux";
+
 const Header = () => {
+    const location = useLocation();
     const onlineStatus = UseOnlineStatus();
     const cartItems = useSelector((store) => store.cart.items);
+    const wishlistItems=useSelector((store)=>store.cart.wishlist);
+
+    // Helper function to determine if a path is active
+    const isActive = (path) => location.pathname === path;
+
     return (
         <header className="p-4 dark:bg-gray-100 dark:text-gray-800">
             <div className="container flex justify-between h-16 mx-auto">
@@ -25,12 +32,12 @@ const Header = () => {
                 </a>
                 <ul className="items-stretch hidden space-x-3 md:flex">
                     <li className="flex items-center px-4 -mb-1 border-b-2">
-                        Online Status :{onlineStatus ? "🟢" : "🔴"}
+                        Online Status: {onlineStatus ? "🟢" : "🔴"}
                     </li>
                     <li className="flex">
                         <Link
                             to="/"
-                            className="flex items-center px-4 -mb-1 border-b-2 dark:border-"
+                            className={`flex items-center px-4 -mb-1 border-b-2 ${isActive('/') ? 'border-violet-600 text-violet-600' : 'border-transparent'}`}
                         >
                             Home
                         </Link>
@@ -38,32 +45,28 @@ const Header = () => {
                     <li className="flex">
                         <Link
                             to="/about"
-                            className="flex items-center px-4 -mb-1 border-b-2 dark:border-"
+                            className={`flex items-center px-4 -mb-1 border-b-2 ${isActive('/about') ? 'border-violet-600 text-violet-600' : 'border-transparent'}`}
                         >
                             About
                         </Link>
                     </li>
                     <li className="flex">
-                        <a
-                            rel="noopener noreferrer"
-                            href="#"
-                            className="flex items-center px-4 -mb-1 border-b-2 dark:border- dark:text-violet-600 dark:border-violet-600"
+                        <Link
+                            to="/cart"
+                            className={`flex items-center px-4 -mb-1 border-b-2 ${isActive('/cart') ? 'border-violet-600 text-violet-600' : 'border-transparent'}`}
                         >
-                            Link
-                        </a>
+                            Cart ({cartItems?.length})
+                        </Link>
                     </li>
                     <li className="flex">
-                        <a
-                            rel="noopener noreferrer"
-                            href="#"
-                            className="flex items-center px-4 -mb-1 border-b-2 dark:border-"
+                        <Link
+                            to="/wishlist"
+                            className={`flex items-center px-4 -mb-1 border-b-2 ${isActive('/wishlist') ? 'border-violet-600 text-violet-600' : 'border-transparent'}`}
                         >
-                            Link
-                        </a>
+                            Wishlist ({wishlistItems?.length})
+                        </Link>
                     </li>
-                    <li className="flex items-center px-4  cursor-pointer -mb-1  dark:border-">
-                        <Link to="/cart">Cart-({cartItems?.length})</Link>
-                    </li>
+
                 </ul>
                 <button className="flex justify-end p-4 md:hidden">
                     <svg
@@ -85,4 +88,12 @@ const Header = () => {
         </header>
     );
 };
+
 export default Header;
+
+
+// <li className="flex items-center px-4 cursor-pointer -mb-1">
+// <Link to="/cart" className={`flex items-center px-4 -mb-1 border-b-2 ${isActive('/about') ? 'border-violet-600 text-violet-600' : 'border-transparent'}`}>
+//     Cart ({cartItems?.length})
+// </Link>
+// </li>

@@ -10,22 +10,14 @@ const Body = () => {
     const [originalFilteredProducts, setOriginalFilteredProducts] = useState(
         []
     );
+    const [doubleFilteredProduct,setDoubleFilteredProduct]=useState([]);
     const [searchText, setSearchText] = useState("");
     const HighlyRatedCard = withRatedLabel(Cards);
     const [selectedOption, setSelectedOption] = useState("Categories");
     useEffect(() => {
         fetchData();
     }, []);
-    const filterCategories = (category) => {
-        setSelectedOption(category);    
-        //changed line
-        const filteredProd = originalFilteredProducts.filter((product) => {
-            return product.category
-                .toLowerCase()
-                .includes(category.toLowerCase());
-        });
-        setFilteredProducts(filteredProd);
-    };
+
     // console.log(filteredProducts);
     const fetchData = async () => {
         const response = await fetch("https://dummyjson.com/products");
@@ -34,6 +26,20 @@ const Body = () => {
         setFilteredProducts(data.products);
         setOriginalFilteredProducts(data.products);
     };
+
+    const filterCategories = (category) => {
+        //Added line of Code
+        setSelectedOption(category);
+        const filteredProd = originalFilteredProducts.filter((product) => {
+            //changed code
+            return product.category
+                .toLowerCase()
+                .includes(category.toLowerCase());
+        });
+        setFilteredProducts(filteredProd);
+        setDoubleFilteredProduct(filteredProd);
+    };
+
     const [value, setValue] = useState(null);
     if (products === null) return <Shimmer />;
     return (
@@ -54,6 +60,7 @@ const Body = () => {
                     </select>
                 </div>
 
+                {/* Price Range */}
                 <div className="flex items-center ml-6">
                     <div className="range-filter flex items-center mr-6">
                         <input
@@ -64,17 +71,20 @@ const Body = () => {
                             max="65"
                             onChange={(e) => setValue(e.target.value)}
                         />
-                        <label htmlFor="volume" className="text-sm font-medium text-gray-600">Price:{value}</label>
+                        <label
+                            htmlFor="volume"
+                            className="text-sm font-medium text-gray-600"
+                        >
+                            Price:{value}
+                        </label>
                     </div>
                     <button
                         className="price-filter px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         onClick={() => {
-                            //changed code
-                            const filteredProduct = filteredProducts.filter(
-                                (item) => {
+                            const filteredProduct =
+                            doubleFilteredProduct.filter((item) => {
                                     return item.price > value;
-                                }
-                            );
+                                });
 
                             setFilteredProducts(filteredProduct);
                         }}
@@ -102,7 +112,7 @@ const Body = () => {
                             onClick={() => {
                                 const filteredProducts =
                                     //changed code
-                                    filteredProducts.filter((res) => {
+                                    doubleFilteredProduct.filter((res) => {
                                         return res.title
                                             .toLowerCase()
                                             .includes(searchText.toLowerCase());
